@@ -1,0 +1,5 @@
+mobile_base_controller:
+  type: "omni_triangle_controller/OmniDriveController"
+  wheel1: 'wheel1'
+  wheel2: 'wheel3'
+  wheel3: 'wheel2'

@@ -2,21 +2,48 @@
 
   <!-- Load joint controller configurations from YAML file to parameter server -->
   <rosparam file="$(find xm_robothw)/config/base_controller.yaml" command="load"/>
-  <node pkg="xm_serialnode" type="serial_node" name="serial_node" />
+  <rosparam file="$(find xm_robothw)/config/arm_controller.yaml" command="load" />
+  <rosparam file="$(find xm_robothw)/config/joint_state_controller.yaml" command="load" />
+  <rosparam file="$(find xm_robothw)/config/joint_names.yaml" command="load" />
+  
+  <!-- Run serial node >
+  <node pkg="xm_serialnode" type="serial_node" name="serial_node" / -->
+  
   <node name="xm_robothw" 
 		pkg="xm_robothw" 
 		type="xm_robothw_node" 
 		respawn="false"
 		output="screen" />
 
-  <!-- load the controllers -->
-  <node name="controller_spawner" 
+  <!-- Load xm_robot's urdf -->
+  <param name="robot_description" textfile="$(find xm_description)/urdf/xm_robot.urdf" />
+
+  <!-- Publish robot's state -->
+  <node pkg="robot_state_publisher" type="state_publisher" name="robot_state_publisher" />
+
+  <!-- Load the controllers -->
+  <node name="base_controller_spawner" 
 		pkg="controller_manager" 
 		type="spawner" 
 		respawn="false"
 		output="screen" 
 		args="mobile_base_controller"/>
 
+  <node name="arm_controller_spawner"
+        pkg="controller_manager"
+		type="spawner"
+		respawn="false"
+		output="screen"
+		args="mobile_arm_controller"/>
+
+  <node name="state_controller_spawner" 
+		pkg="controller_manager" 
+		type="spawner" 
+		respawn="false"
+		output="screen" 
+		args="joint_state_controller"/>
+  
+  <!-- Load nodelet manager >
   <node pkg="nodelet" 
 		type="nodelet" 
 		name="nodelet_manager" 
@@ -32,5 +59,5 @@
       
 	  <remap from="velocity_smoother/raw_cmd_vel" to="mobile_base_controller/cmd_vel"/>
       <remap from="velocity_smoother/smooth_cmd_vel" to="mobile_base_controller/smooth_cmd_vel"/>
-  </node>
+  </node -->
 </launch>

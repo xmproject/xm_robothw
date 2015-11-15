@@ -117,7 +117,7 @@ include_directories(
 # )
 
 ## Declare a cpp executable
- add_executable(xm_robothw_node src/main.cpp src/robothw.cpp)
+add_executable(xm_robothw_node src/main.cpp src/robothw.cpp)
 
 ## Add cmake target dependencies of the executable/library
 ## as an example, message headers may need to be generated before nodes

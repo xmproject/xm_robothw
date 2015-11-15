@@ -1,4 +1,4 @@
-mobile_arm_controller:
+xm_arm_controller:
   type: "position_controllers/JointTrajectoryController"
   joints:
     - joint_lift
